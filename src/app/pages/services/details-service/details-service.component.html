@@ -1,0 +1,56 @@
+<!-- <div class="background-cloud"> -->
+  <div class="container py-5" *ngIf="service">
+    <div class="row row-eq-height">
+      <div class="col-12 col-lg-8">
+        <div class="border-bottom">
+          <div class="h1 font-weight-bold mb-4">
+            <img [src]="service.image" alt="" width="100" height="100" class="mr-3">
+            {{service.title}}
+          </div>
+
+          <p class="mb-4 text-pun-secondary">{{service.description}}</p>
+          <div class="d-flex mb-5">
+            <ng-container *ngIf="service.price; else noPrice">
+              <span class="badge badge-pun-secondary mr-4">{{service.price | number : "4.0-2"}} {{service.currency}}</span>
+            </ng-container>
+            <ng-template #noPrice>
+              <span class="badge badge-pun-secondary mr-4">Liên hệ</span>
+            </ng-template>
+            <span class="badge badge-pun-secondary">{{service.time}}</span>
+          </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between flex-wrap pt-5">
+          <button class="btn btn-lg btn-pun-secondary" [class.active]="tabView === 'about'" (click)="changeView('about')">Giới thiệu</button>
+          <button class="btn btn-lg btn-pun-secondary" [class.active]="tabView === 'included'" (click)="changeView('included')">Chi tiết</button>
+        </div>
+        <div class="mt-5">
+          <p class="text-pun-secondary content-view" *ngIf="tabView === 'about'">{{service.about}}</p>
+          <p class="text-pun-secondary content-view text-break" *ngIf="tabView === 'included'" [innerHTML]="service.details"></p>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+        <div class="card-contact border">
+          <h4 class="font-weight-bold">Đặt lịch hẹn</h4>
+          <form (ngSubmit)="submitBooking(form)" #form="ngForm">
+            <div class="form-group">
+              <input type="text" name="name" [(ngModel)]="bookingForm.name" class="form-control input-contact" placeholder="Nhập tên của bạn" required>
+            </div>
+            <div class="form-group">
+              <input type="text" name="phone" [(ngModel)]="bookingForm.phone" class="form-control input-contact" placeholder="Số điện thoại" required>
+            </div>
+            <div class="form-group">
+              <ng-select [items]="listServices" bindValue="_id" class="custom-lg-select" [clearable]="false" [placeholder]="'Chọn dịch vụ'" name="service" [(ngModel)]="bookingForm.service" bindLabel="title"></ng-select>
+            </div>
+            <div class="form-group">
+              <input type="text" name="date_visit" [(ngModel)]="bookingForm.date_visit" placeholder="Chọn ngày hẹn" class="form-control input-contact" [bsConfig]="dateConfig" bsDatepicker >
+            </div>
+            <div class="form-group">
+              <ng-select [items]="pageService.schedules" [(ngModel)]="bookingForm.time_visit" [clearable]="false" [searchable]="false" bindValue="id" class="custom-lg-select" [placeholder]="'Chọn thời gian'" name="time_visit" bindLabel="name"></ng-select>
+            </div>
+            <button class="btn btn-lg w-100 btn-pun-danger">Gửi</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- </div> -->

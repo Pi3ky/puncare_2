@@ -1,0 +1,94 @@
+<div class="modal-header border-bottom-0">
+  <i class="fas h4 mb-0 fa-long-arrow-alt-left text-secondary cursor-pointer" *ngIf="selectedType" (click)="selectedType = false"></i>
+  <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef?.hide()">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <h3>{{loginMode ? 'Đăng nhập' : 'Đăng kí'}} tài khoản</h3>
+  <p>Tài khoản quản lý? <a href="javascript:;" (click)="directToLoginAdmin()">Đăng nhập</a></p>
+  <ng-container *ngIf="selectedType; else selectType">
+    <ng-container *ngIf="loginMode; else signupMode">
+      <form #login="ngForm">
+        <div class="form-group">
+          <label>Email: </label>
+          <input type="text" name="email" [(ngModel)]="loginForm.email" class="form-control" placeholder="Vd: abcde@puncare.vn" required pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$">
+        </div>
+        <div class="form-group">
+          <label class="d-flex justify-content-between">
+            <span>Mật khẩu: </span>
+            <a href="javascrip:;">Quên mật khẩu?</a>
+          </label>
+          <input type="password" name="password" [(ngModel)]="loginForm.password" class="form-control" placeholder="******" required>
+        </div>
+        <button class="btn btn-block btn-static rounded-sm btn-pun-danger" (click)="submitLogin(login)" type="button">Đăng nhập</button>
+      </form>
+    </ng-container>
+    <ng-template #signupMode>
+      <form #register="ngForm">
+        <div class="form-group position-relative">
+          <label>Email: </label>
+          <input type="text" name="email" [(ngModel)]="registerForm.email" class="form-control" placeholder="Vd: abcde@puncare.vn" required pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$">
+          <div *ngIf="register.submitted && register.controls.email.invalid" class="has-invalid">
+            <small *ngIf="register.controls.email.errors.required"><i class="fas fa-exclamation-triangle mr-2"></i>Yêu cầu nhập email</small>
+            <small *ngIf="register.controls.email.errors.pattern"><i class="fas fa-exclamation-triangle mr-2"></i>Email không hợp lệ</small>
+          </div>
+        </div>
+        <div class="form-group position-relative">
+          <label>Tên: </label>
+          <input type="text" name="name" [(ngModel)]="registerForm.name" class="form-control" placeholder="Vd: Nguyễn Văn A" required>
+          <div *ngIf="register.submitted && register.controls.name.invalid" class="has-invalid">
+            <small *ngIf="register.controls.name.errors.required"><i class="fas fa-exclamation-triangle mr-2"></i>Yêu cầu nhập tên</small>
+          </div>
+        </div>
+        <div class="form-group position-relative">
+          <label>Số điện thoại: </label>
+          <input type="text" name="phone" [(ngModel)]="registerForm.phone" class="form-control" placeholder="Vd: 0987654321">
+        </div>
+        <div class="form-group position-relative">
+          <label>Địa chỉ: </label>
+          <input type="text" name="address" [(ngModel)]="registerForm.address" class="form-control">
+        </div>
+        <div class="form-group position-relative">
+          <label>Địa chỉ: </label>
+          <input type="text" name="address" [(ngModel)]="registerForm.district" class="form-control">
+        </div>
+        <div class="form-group position-relative">
+          <label>Địa chỉ: </label>
+          <input type="text" name="address" [(ngModel)]="registerForm.city" class="form-control">
+        </div>
+        <div class="form-group position-relative">
+          <label>Mật khẩu: </label>
+          <input type="password" name="password" [(ngModel)]="registerForm.password" class="form-control" placeholder="******" required minlength="6">
+          <div *ngIf="register.submitted && register.controls.password.invalid" class="has-invalid">
+            <small *ngIf="register.controls.password.errors.required"><i class="fas fa-exclamation-triangle mr-2"></i>Yêu cầu nhập tên</small>
+            <small *ngIf="register.controls.password.errors.minlength"><i class="fas fa-exclamation-triangle mr-2"></i>Tối thiểu 6 kí tự</small>
+          </div>
+        </div>
+        <button class="btn btn-block btn-static rounded-sm btn-pun-danger" type="button" (click)="submitRegister(register)">Đăng kí</button>
+      </form>
+    </ng-template>
+  </ng-container>
+  <ng-template #selectType>
+    <div class="mt-4">
+      <button class="btn btn-pun-danger btn-static rounded-sm btn-block my-2" (click)="selectForm(true)">Đăng nhập</button>
+      <button class="btn btn-outline-info btn-block rounded-sm my-2" (click)="selectForm(false)">Đăng kí</button>
+    </div>
+  </ng-template>
+</div>
+<div class="loading-overlay" *ngIf="isLoading">
+  <div class="lds-spinner">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>

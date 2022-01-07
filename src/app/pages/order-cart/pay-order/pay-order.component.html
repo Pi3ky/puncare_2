@@ -1,0 +1,105 @@
+<div class="container py-5">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/pages/home" routerLinkActive="active">Trang chủ</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Thanh toán</li>
+    </ol>
+  </nav>
+  <form #pay="ngForm">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <h4>Thông tin thanh toán</h4>
+        <div class="row mb-3">
+          <div class="col-6">
+            <label>Họ và tên <b class="text-danger">*</b></label>
+            <input type="text" name="name" class="form-control" [(ngModel)]="payForm.name" required>
+          </div>
+          <div class="col-6">
+            <label>Số điện thoại <b class="text-danger">*</b></label>
+            <input type="text" name="phone" class="form-control" [(ngModel)]="payForm.phone" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Địa chỉ <b class="text-danger">*</b></label>
+          <input type="text" name="address" class="form-control" placeholder="Địa chỉ" [(ngModel)]="payForm.address" required>
+        </div>
+        <div class="form-group">
+          <label>Phường / Xã</label>
+          <input type="text" name="district" class="form-control" [(ngModel)]="payForm.district">
+        </div>
+        <div class="form-group">
+          <label>Tỉnh / Thành phố <b class="text-danger">*</b></label>
+          <input type="text" name="city" class="form-control" [(ngModel)]="payForm.city" required>
+        </div>
+        <div class="form-group">
+          <label>Mã bưu điện</label>
+          <input type="text" name="post_code" class="form-control" [(ngModel)]="payForm.post_code">
+        </div>
+        <div class="form-group">
+          <label>Ghi chú</label>
+          <textarea type="text" name="note" class="form-control" rows="3" [(ngModel)]="payForm.note"></textarea>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <h4>Thông tin đơn hàng</h4>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <th>Sản phẩm</th>
+              <th>Tạm Tính</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of ordersList">
+                <td>{{item.title}} x {{item.quantity}}</td>
+                <td class="text-right">{{(item.quantity * item.price) | number : '4.0-2'}} VNĐ</td>
+              </tr>
+              <tr>
+                <td class="font-weight-bold">Tổng giá sản phẩm</td>
+                <td class="text-right font-weight-bold">{{payForm.totalPrice | number : '4.0-2'}} VNĐ</td>
+              </tr>
+              <tr>
+                <td class="font-weight-bold">Phí vận chuyển</td>
+                <td class="text-right font-weight-bold">{{shippingFee | number : '4.0-2'}} VNĐ</td>
+              </tr>
+              <tr>
+                <td class="font-weight-bold">Tổng giá đơn hàng</td>
+                <td class="text-right font-weight-bold">{{(shippingFee + payForm.totalPrice) | number : '4.0-2'}} VNĐ</td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <h4>Phương thức thanh toán</h4>
+    <div class="bg-light p-4">
+      <ng-container *ngFor="let item of arrayPayment">
+        <a href="javascript:;" type="button" class="d-block mb-3 btn-payment" (click)="selectTypePayment(item.id)"
+          [attr.aria-expanded]="item.checked" aria-controls="collapseBasic">{{item.title}} <b *ngIf="item.checked"><i class="fas fa-check text-success ml-2"></i></b>
+        </a>
+        <div id="collapseBasic" [collapse]="!item.checked" [isAnimated]="true">
+          <div class="well well-lg card card-block card-header mb-3">
+            <p class="font-italic">{{item.title}}</p>
+            <ng-container *ngIf="item.id === 'banking'; else standard">
+              <p>Khách hàng vui lòng thanh toán đơn hàng bằng cách chuyển tiền đến STK:</p>
+              <p>STK: <b>45010006367712</b></p>
+              <p>Chủ tài khoản: <b>BUI DINH KHANG</b></p>
+              <p>BIDV - CN Hà Tây</p>
+
+            </ng-container>
+            <ng-template #standard>
+              <p>Đơn hàng sẽ được chuyển đến địa chỉ của quý khách trong khoảng từ 2 - 7 ngày (nội/ngoại thành Hà Nội). Và từ 4 - 10 (các tỉnh thành khác)</p>
+              <p>Chúng tôi sẽ gọi điện xác nhận đơn hàng với quý khách và sau đó sẽ được đóng gói vận chuyển.</p>
+              <p>Quý khác vui lòng để ý chuông điện thoại để không bị lỡ cuộc gọi từ Pun Care. Xin cảm ơn!</p>
+            </ng-template>
+          </div>
+        </div>
+      </ng-container>
+      <h4>Quý khách được phép kiểm tra hàng trước khi nhận hàng</h4>
+    </div>
+    <div class="text-right">
+      <button class="btn btn-lg btn-pun-danger btn-static rounded-sm w-25 mt-3" (click)="submit(pay)" type="button">Đặt hàng</button>
+    </div>
+  </form>
+
+</div>

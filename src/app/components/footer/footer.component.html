@@ -1,0 +1,81 @@
+<div class="block-footer">
+  <div class="container border-bot-pun pb-5">
+    <div class="row">
+      <div class="col-12 col-md-4">
+        <a routerLink="page/home" routerLinkActive="active" class="text-logo">
+          <img src="./assets/pun_image/punshop.png" width="50">
+          <label class="ml-3 mb-0 cursor-pointer font-weight-bold">Pun Care</label>
+        </a>
+        <p class="slogan-quote mt-3">Sự hài lòng của bạn là mục tiêu của chúng tôi</p>
+        <div class="social-connect">
+          <a href="https://www.facebook.com/khangpm2" class="circle-social">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://www.instagram.com/khangpm1/?hl=en" class="circle-social">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.youtube.com/channel/UCETMyOlDl1WM1Kj-MlDcyiQ" class="circle-social">
+            <i class="fab fa-youtube"></i>
+          </a>
+          <a href="https://github.com/Pi3ky/punshop" class="circle-social">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/khang-bui-dinh-126773202/" class="circle-social">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
+      <div class="col-12 col-md-8 col-lg-4 d-flex">
+        <!-- Menus -->
+        <div class="footer-menu-wrap">
+          <label class="menu-title">Danh sách</label>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <a routerLink="pages/home">Trang chủ</a>
+            </li>
+            <li class="list-group-item">
+              <a routerLink="pages/about">Giới thiệu</a>
+            </li>
+            <li class="list-group-item">
+              <a routerLink="pages/services">Dịch vụ</a>
+            </li>
+            <li class="list-group-item">
+              <a routerLink="pages/products">Sản phẩm</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Services -->
+        <div class="footer-menu-wrap ml-auto">
+          <label class="menu-title">Dịch vụ</label>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let service of publicService.services">
+              <a>{{service.title}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+        <h2 class="font-weight-bold">Liên hệ</h2>
+        <div class="block-contact">
+          <p class="text-break text-pun-secondary">
+            <i class="fas fa-map-marker-alt mr-2"></i>
+            {{shop_address.street + ', ' + shop_address.district}}
+          </p>
+          <p>
+            <i class="fas fa-envelope mr-2"></i>
+            <a href="mailto:{{shop_address.email}}" class="text-pun-secondary">{{shop_address.email}}</a>
+          </p>
+          <p>
+            <i class="fas fa-phone-alt mr-2"></i>
+            <a href="tel:{{shop_address.phone}}" class="text-pun-secondary">{{shop_address.phone}}</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container d-flex pt-4">
+    <div class="text-pun-secondary">Copyright © <b>Pun Care</b></div>
+    <div class="text-pun-secondary ml-auto">{{now | date : 'dd - MM - yyy, hh:mm a'}}</div>
+  </div>
+</div>

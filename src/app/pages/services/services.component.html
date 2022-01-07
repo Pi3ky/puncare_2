@@ -1,0 +1,97 @@
+<div class="background-cloud border-bottom">
+  <div class="container py-5">
+    <div class="text-center mb-5 mx-5 px-5">
+      <h1 class="font-weight-bold">Dịch vụ</h1>
+      <h5 class="text-pun-secondary">Chúng tôi yêu động vật và sẽ yêu thú cưng của bạn theo cách bạn yêu chúng. Tại đây chúng tôi có những dịch vụ tốt nhất dành cho các bạn nhỏ</h5>
+    </div>
+    <div class="row">
+      <ng-container *ngFor="let service of listServices | paginate: { id: 'custom_page', itemsPerPage: search.page_size, currentPage: search.page, totalItems: totalItems }">
+        <div class=" col-12 col-lg-6">
+          <a class="box-service" (click)="openService(service)">
+            <img class="box-img" [src]="service.image" [alt]="service.title">
+            <div class="d-flex flex-column">
+              <h3 class="font-weight-bold">{{service.title}}</h3>
+              <p>{{service.description}}</p>
+              <div class="d-flex mt-auto">
+                <ng-container *ngIf="service.price; else noPrice">
+                  <span class="badge badge-pun-secondary mr-4">{{service.price | number : "4.0-2"}} {{service.currency}}</span>
+                </ng-container>
+                <ng-template #noPrice>
+                  <span class="badge badge-pun-secondary mr-4">Liên hệ</span>
+                </ng-template>
+                <span class="badge badge-pun-secondary" *ngIf="service?.time">{{service.time}}</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </ng-container>
+    </div>
+    <app-pagination *ngIf="totalItems > 6" [totalItems]="totalItems" [currentRow]="search.page_size" (pageChange)="changePage($event)" [pageSize]="['4', '5', '6', '10']"></app-pagination>
+  </div>
+</div>
+
+<!-- box contact -->
+<div class="container my-5">
+  <div class="row">
+    <div class="col-12 col-md-4">
+      <h1 class="title-contact">Liên hệ</h1>
+      <p>Sản phẩm và dịch vụ của chúng tôi là để mang đến cho bạn và những người bạn nhỏ của bạn sự hài lòng</p>
+      <div class="block-contact">
+        <p class="text-pun-secondary">
+          <i class="fas fa-map-marker-alt mr-2"></i>
+          {{shop_address.street + ', ' + shop_address.district}}
+        </p>
+        <p class="text-pun-secondary">
+          <i class="fas fa-envelope mr-2"></i>
+          <a href="mailto:chocopie.nuce@gmail.com"  class="text-pun-secondary">{{shop_address.email}}</a>
+        </p>
+        <p class="text-pun-secondary">
+          <i class="fas fa-phone-alt mr-2"></i>
+          <a href="tel:+84386624545"  class="text-pun-secondary">{{shop_address.phone}}</a>
+        </p>
+      </div>
+    </div>
+    <div class="col-12 col-md-8">
+      <div class="card-contact border">
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit(contactForm)">
+          <div class="row form-group">
+            <div class="col-12 col-md-6">
+              <label class="title-input-lg">Tên</label>
+              <input type="text" formControlName="name" class="form-control input-contact"
+              placeholder="Nhập tên của bạn" required>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="title-input-lg">Địa chỉ email</label>
+              <input type="email" formControlName="email" class="form-control input-contact" placeholder="Abc.123@puncare.vn">
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-12 col-md-6">
+              <label class="title-input-lg">Số điện thoại</label>
+              <input type="tel" formControlName="phone" class="form-control input-contact" placeholder="(+84) 1234567890" required>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="title-input-lg">Lựa chọn dịch vụ</label>
+              <ng-select [items]="listServices" bindValue="id" class="custom-lg-select" [placeholder]="'Ví dụ: Spa - Tắm gội - ...'" formControlName="service" bindLabel="title"></ng-select>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-12 col-md-6">
+              <label class="title-input-lg">Thời gian</label>
+              <input type="text" formControlName="date_visit" placeholder="Chọn ngày" class="form-control input-contact" [bsConfig]="dateConfig" bsDatepicker >
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="title-input-lg">Lịch hẹn</label>
+              <ng-select [items]="pageService.schedules" [clearable]="false" [searchable]="false" bindValue="id" class="custom-lg-select" [placeholder]="'Ví dụ: Buổi sáng'" formControlName="time_visit" bindLabel="name"></ng-select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="title-input-lg">Lời nhắn</label>
+            <textarea placeholder="Lời nhắn của bạn ..." rows="5" class="form-control input-contact" formControlName="msg"></textarea>
+          </div>
+          <button class="btn btn-pun-danger btn-lg btn-contact my-4">Gửi</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

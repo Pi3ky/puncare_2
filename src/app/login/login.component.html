@@ -1,0 +1,25 @@
+<div class="shadow-sm container py-5 px-0">
+  <div class="page-head">
+    <i class="fas h4 mb-0 fa-long-arrow-alt-left cursor-pointer" [routerLink]="back_url" routerLinkActive="active"></i>
+  </div>
+  <div class="my-5 login-box mx-auto">
+    <h3 class="mb-4 text-center">Đăng nhập</h3>
+    <form (ngSubmit)="submit(login)" #login="ngForm">
+      <div class="mb-4">
+        <label>Email: </label>
+        <input type="text" name="name" [(ngModel)]="loginForm.email" class="form-control input-contact" placeholder="Email" required>
+      </div>
+      <div class="mb-4">
+        <label class="d-flex justify-content-between">
+          <span>Mật khẩu: </span>
+          <a href="javascrip:;">Quên mật khẩu?</a>
+        </label>
+        <input type="text" name="phone" [(ngModel)]="loginForm.password" class="form-control input-contact" placeholder="Mật khẩu" required>
+      </div>
+      <button class="btn btn-lg w-100 btn-static btn-pun-danger">Gửi</button>
+    </form>
+    <div class="other-way text-center mt-4">
+      Bạn chưa có tài khoản Pun Care? <a href="javascrip:;">Đăng kí</a>
+    </div>
+  </div>
+</div>

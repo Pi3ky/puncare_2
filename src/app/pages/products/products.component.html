@@ -1,0 +1,44 @@
+<div class="border-bottom">
+  <div class="container py-5">
+    <div class="mb-5">
+      <h1 class="font-weight-bold">Sản phẩm</h1>
+      <h5 class="text-pun-secondary">Hiện tại, chúng tôi có bán những loại sản phẩm được ưa chuộng trên thị trường, đảm
+        bảo chất lượng và giàu chất dinh dưỡng cho nhiều loại vật nuôi.</h5>
+    </div>
+    <div class="d-flex">
+      <div class="filter-box shadow">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control position-relative rounded" [(ngModel)]="search.title" (change)="getProducts()" placeholder="Tìm kiếm" aria-describedby="button-search">
+          <div class="input-group-append h-100 btn-inside">
+            <button class="btn btn-sm" id="button-search"><i class="fas fa-search"></i></button>
+          </div>
+        </div>
+        <div class="px-3">
+          <div class="font-weight-bold pb-2 border-bottom">Danh mục sản phẩm</div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item list-group-item-action pl-0 cursor-pointer border-0" [class.active]="search.type_id === ''" (click)="filterType({_id: ''})">Tất cả sản phẩm</li>
+            <li class="list-group-item list-group-item-action pl-0 cursor-pointer border-0" [class.active]="search.type_id === type._id" *ngFor="let type of typeProduct" (click)="filterType(type)">{{type.type_name}}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="w-100 row">
+        <div class="col-12 col-md-6 col-lg-4 item-wrap" *ngFor="let product of listProducts | paginate: { id: 'custom_page', itemsPerPage: search.page_size, currentPage: search.page, totalItems: totalItems };">
+          <div class="card">
+            <img [src]="product.image" class="card-img-top" [alt]="product.title">
+            <div class="card-body">
+              <div class="mb-2">
+                <p class="mb-1 font-weight-bold">{{product.title}}</p>
+                <p class="mb-1 text-pun-danger font-weight-bold">{{product.price | number : '4.0-2'}} {{product.currency}}</p>
+                <p class="mb-1">{{product.quantity_sold}} lượt mua</p>
+              </div>
+              <button class="btn btn-pun-danger btn-sm btn-static btn-block" (click)="openProduct(product)">Tùy chọn mua</button>
+            </div>
+          </div>
+        </div>
+        <div class="w-100 border-top pt-3" *ngIf="totalItems > search.page_size">
+          <app-pagination [enableSelectSize]="false" [templateClass]="'justify-content-center'" [totalItems]="totalItems" [currentRow]="search.page_size" (pageChange)="changePage($event)" ></app-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
